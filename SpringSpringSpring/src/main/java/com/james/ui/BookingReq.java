@@ -5,14 +5,22 @@ import java.util.List;
 
 import org.springframework.util.StringUtils;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.james.bo.Flight;
+import com.james.util.JsonDateDeserializer;
+
 public class BookingReq {
     
 	private String departure;
 	
 	private String arrival;
 	
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date departureDate;
 	
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date returnDate;
 	
 	private String booker;
@@ -20,6 +28,8 @@ public class BookingReq {
 	private String password;
 	
 	private List<String> flightIds;
+	
+	private List<Flight> flights;
 
 	public String getDeparture() {
 		if(StringUtils.isEmpty(departure)) 
@@ -50,6 +60,7 @@ public class BookingReq {
 			return departureDate;
 	}
 
+	//@JsonDeserialize(using=JsonDateDeserializer.class)
 	public void setDepartureDate(Date departureDate) {
 		this.departureDate = departureDate;
 	}
@@ -61,6 +72,7 @@ public class BookingReq {
 			return returnDate;
 	}
 
+	//@JsonDeserialize(using=JsonDateDeserializer.class)
 	public void setReturnDate(Date returnDate) {
 		this.returnDate = returnDate;
 	}
@@ -87,6 +99,14 @@ public class BookingReq {
 
 	public void setFlightIds(List<String> flightIds) {
 		this.flightIds = flightIds;
+	}
+
+	public List<Flight> getFlights() {
+		return flights;
+	}
+
+	public void setFlights(List<Flight> flights) {
+		this.flights = flights;
 	}
 
 	@Override
