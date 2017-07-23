@@ -119,7 +119,7 @@ public class MongoApplication implements CommandLineRunner {
 		for (Flight flight : this.flightRepo.findByDepartureCodeAndArrivalCode("YYZ", "JFK")) {
 			//System.out.println(flight);
 			
-			bk = new Booking(new Date(System.currentTimeMillis()), 2, "jamessung@g.com", "1111");
+			bk = new Booking(new Date(System.currentTimeMillis()), 2, "james@gmail.com", "1111");
 			bk.addFlight(flight);
 			this.bookingRepo.save(bk);
 		}
@@ -131,9 +131,17 @@ public class MongoApplication implements CommandLineRunner {
 		}
 		System.out.println();
 
-		System.out.println("Bookings found with findBookingsByBooker('jamessung@g.com'):");
+		System.out.println("Bookings found with findBookingsByBooker('james@gmail.com'):");
 		System.out.println("--------------------------------");
-		for (Booking booking : this.bookingService.findBookingsByBooker("jamessung@g.com")) {
+		for (Booking booking : this.bookingService.findBookingsByBooker("james@gmail.com")) {
+			System.out.println(booking);
+		}		
+
+		System.out.println();
+
+		System.out.println("Bookings found with findBookingsByBookerAndPassword('james@gmail.com','1111'):");
+		System.out.println("--------------------------------");
+		for (Booking booking : this.bookingService.findBookingsByBookerAndPassword("james@gmail.com", "1111")) {
 			System.out.println(booking);
 		}		
 	}

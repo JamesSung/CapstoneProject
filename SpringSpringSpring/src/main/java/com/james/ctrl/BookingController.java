@@ -38,7 +38,7 @@ public class BookingController {
     
     private static final Logger logger = LoggerFactory.getLogger(BookingController.class);
     
-    @RequestMapping("/searchFlight")
+    @RequestMapping(value = "/searchFlight", method = {RequestMethod.POST,RequestMethod.GET})
     public @ResponseBody BookingRes searchFlight(@RequestBody BookingReq req) {
     	
     	Date curr = new Date(System.currentTimeMillis());
@@ -73,7 +73,7 @@ public class BookingController {
         return bkRes;
     }
 
-    @RequestMapping(value = "/confirmBooking", method = {RequestMethod.GET})
+    @RequestMapping(value = "/confirmBooking", method = {RequestMethod.POST,RequestMethod.GET})
     public @ResponseBody BookingRes confirmBooking(@RequestBody BookingReq req) {
     	
     	List<Flight> fls = new ArrayList<Flight>();
@@ -88,7 +88,7 @@ public class BookingController {
         return bkRes;
     }
 
-    @RequestMapping(value = "/addBooking", method = RequestMethod.GET)
+    @RequestMapping(value = "/addBooking", method = {RequestMethod.POST,RequestMethod.GET})
     public @ResponseBody BookingRes addBooking(@RequestBody BookingReq req) throws Exception{
     	    	
     	List<Flight> fls = new ArrayList<Flight>();
@@ -96,6 +96,7 @@ public class BookingController {
     	if(fids != null){
     		fids.forEach( id -> {fls.add(bookingService.findFlightById(id));});
     	}
+    	System.out.println("addBooking: " + req);
     	
     	Booking booking = new Booking();
     	booking.setBooker(req.getBooker());
@@ -113,6 +114,7 @@ public class BookingController {
     	if(logger.isDebugEnabled()){
     		logger.debug("bookingList: " + bks);
     	}    	
+    	System.out.println("bookingList: " + bks);
     	
         BookingRes bkRes = new BookingRes();
         bkRes.setBooker(req.getBooker());
@@ -123,9 +125,11 @@ public class BookingController {
 
     }
     
-    @RequestMapping(value = "/bookingList", method = {RequestMethod.GET})
+    @RequestMapping(value = "/bookingList", method = {RequestMethod.POST,RequestMethod.GET})
     public @ResponseBody BookingRes bookingList(@RequestBody BookingReq req) {
 
+    	System.out.println("###request: " + req);
+    	
         BookingRes bkRes = new BookingRes();
 
         if(StringUtils.isEmpty(req.getBooker()) || StringUtils.isEmpty(req.getPassword()))  return bkRes;
@@ -134,6 +138,7 @@ public class BookingController {
     	if(logger.isDebugEnabled()){
     		logger.debug("bookingList: " + bks);
     	}    	
+    	System.out.println("bookingList: " + bks);
  
         bkRes.setBooker(req.getBooker());
         bkRes.setPassword(req.getPassword());

@@ -17,6 +17,9 @@ import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.james.util.JsonDateSerializer;
+
 @Document(collection = "flights")
 @CompoundIndexes({
     @CompoundIndex(name = "dept_arrv_deptdt_idx", def = "{'departure': 1, 'arrival': 1, 'departureDate': 1}")
@@ -116,6 +119,7 @@ public class Flight implements Serializable{
 		this.arrivalCode = arrivalCode;
 	}
 
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDepartureDate() {
 		return departureDate;
 	}

@@ -4,27 +4,32 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.james.bo.Airport;
 import com.james.bo.Booking;
 import com.james.bo.Flight;
+import com.james.util.JsonDateSerializer;
 
 public class BookingRes {
 	
-    private static SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+    //private static SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 
 	private String departure;
 	
 	private String arrival;
 	
-	private String departureDate;
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+	private Date departureDate;
 	
-	private String returnDate;
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+	private Date returnDate;
 	
 	private String booker;
 	
 	private String password;
 	
-	private List<Airport> airporList;
+	private List<Airport> airportList;
 	
 	private List<Flight> flightList;
 	
@@ -46,20 +51,22 @@ public class BookingRes {
 		this.arrival = arrival;
 	}
 
-	public String getDepartureDate() {
+	//@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getDepartureDate() {
 		return departureDate;
 	}
 
 	public void setDepartureDate(Date departureDate) {
-		this.departureDate = dateFormat.format(departureDate);
+		this.departureDate = departureDate;//dateFormat.format(departureDate);
 	}
 
-	public String getReturnDate() {
+	//@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getReturnDate() {
 		return returnDate;
 	}
 
 	public void setReturnDate(Date returnDate) {
-		this.returnDate = dateFormat.format(returnDate);
+		this.returnDate = returnDate;//dateFormat.format(returnDate);
 	}
 
 	public String getBooker() {
@@ -78,12 +85,12 @@ public class BookingRes {
 		this.password = password;
 	}
 
-	public List<Airport> getAirporList() {
-		return airporList;
+	public List<Airport> getAirportList() {
+		return airportList;
 	}
 
-	public void setAirporList(List<Airport> airporList) {
-		this.airporList = airporList;
+	public void setAirporList(List<Airport> airportList) {
+		this.airportList = airportList;
 	}
 
 	public List<Flight> getFlightList() {
@@ -109,8 +116,8 @@ public class BookingRes {
 							+ this.departure +", arrival: " 
 							+ this.arrival +", departureDate: " 
 							+ this.departureDate +", returnDate: " 
-							+ this.returnDate +", airporList: " 
-							+ this.airporList +", flightList: " 
+							+ this.returnDate +", airportList: " 
+							+ this.airportList +", flightList: " 
 							+ this.flightList +", bookingList: " 
 							+ this.bookingList +"]";
 	}

@@ -1,6 +1,7 @@
 package com.james.bo;
 
 import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,7 +18,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.james.util.PWConverter;
+import com.james.util.JsonDateSerializer;
 
 @Document(collection = "bookings")
 public class Booking implements Serializable {
@@ -35,7 +38,7 @@ public class Booking implements Serializable {
 	@Indexed
 	private String booker;
 	
-	@Convert(converter = PWConverter.class)
+	//TO-DO @Convert(converter = PWConverter.class)
 	private String password;
 	
 	@Enumerated(EnumType.ORDINAL)
@@ -66,6 +69,7 @@ public class Booking implements Serializable {
 		this.id = id;
 	}
 
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getBookDate() {
 		return bookDate;
 	}
